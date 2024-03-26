@@ -1,4 +1,4 @@
-# EzPAI: Scripts for extracting Plant Area Index from zenith-looking Digital Cover Photography
+# EzPAI: Python scripts for extracting Plant Area Index from zenith-looking Digital Cover Photography
 
 ## Background and need: 
 EzPAI was developed to meet our need to monitor tree canopy changes with Digital Cover Photography (DCP). DCPs were installed 40+ USDA soil moisture monitoring stations, that were installed to help with calibration and validation efforts of NASA’s Soil Moisture Active Passive (SMAP) over forests [1]. This particular SMAP Validation Experiment extended from 2019 through 2022, but only few stations had a continuous 4 year record (most had 3 years). Originally the experiment plan was to be conducted and completed during 2019, however a combination of COVID and SMAP satellite dropouts caused delays in the ability to conduct the field campaign until 2022.
