@@ -20,7 +20,7 @@ Beyond that, users will most likely need to postprocess data for QA/QC.
 
 ### Explanation:
 
-0_hourscreen.py
+**0_hourscreen.py**
 
 Example: python 0_hourscreen.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
@@ -28,7 +28,7 @@ This script to filter camera imagery by time of day, and export valid data to a 
 
 csv content: the first column has the timestamp and the second column has the file name.
 
-1_blurscreen.py
+**1_blurscreen.py**
 
 Example: python 1_blurscreen.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
@@ -36,7 +36,7 @@ This script is a second filter, and screens the images listed in the '0_hourscre
 
 csv content: same as 0_hourscreen, plus the variance (b1) and maximum value (b2) of the laplace filter result. The threshold is only used for screening out blurry imagery. Only non-blurry images are listed.
 
-2_getPAI.py
+**2_getPAI.py**
 
 Example: python 2_getPAI.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
@@ -49,7 +49,7 @@ csv content:
 - minpixarea gives size of the smallest patches considered as large gaps as % of the image
 - GF, CC, CP and PAI are the canopy structural parameters Gap Fraction, Crown Cover, Crown Porosity, Plant Area Index.
    
-hist_ image content: 
+**hist_ image content:**
 
 ![image info](./expected_result/hist_MB520_2020-6-29_MillbrookSchool-a_testinput_WSCT0030.JPG)
 
@@ -61,7 +61,7 @@ The lower right figure shows the input image for reference, after the camera met
 
 The lower left figure shows the large gaps that were identified in the image. It is important to keep in mind that this functionality is based on a simple contour finding approach, and the contours will often be larger in size than one would expect from visual inspection of the upper and lower right figures. This will bias results for canopy structural parameters, but results can still be expected to have reasonable magnitudes and consistency over time.
 
-0_run_ctrl.py
+**0_run_ctrl.py**
 
 Example: python 0_run_ctrl.py -i . -p MB
 
