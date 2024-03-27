@@ -45,7 +45,7 @@ This script calculates all the items needed to obtain PAI, following the approac
 csv content:
 - lmxb, lmxc and rmxb, rmxc are the locations and counts for the canopy (prefix l) and sky (prefix r) peaks.
 - rb_l and rb_r are the locations of the bins used in the canopy/sky discrimination step, based on the Rosin method. 
-- sky gives the blue sky index mean value of the image. For blue sky index calculation, sky pixels are more strictly identified by default than for the canopy/sky delineation, i.e., 
+- sky gives the blue sky index mean value of the sky pixels. Here, sky pixels were determined using a manner than in the canopy sky partitioning (skythr = 0.75 vs tmthrc, tmthri values of 0.25 of 0.5). 
 - minpixarea gives size of the smallest patches considered as large gaps as % of the image
 - GF, CC, CP and PAI are the canopy structural parameters Gap Fraction, Crown Cover, Crown Porosity, Plant Area Index.
    
