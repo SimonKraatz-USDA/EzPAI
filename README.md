@@ -51,6 +51,8 @@ csv content:
    
 hist_ image content: 
 
+![image info](./expected_result/hist_MB520_2020-6-29_MillbrookSchool-a_testinput_WSCT0030.JPG)
+
 The upper left figure shows the image histogram. It also draws the line from the origin (last bin) to the rmxb (lmxb). These are used in the Rosin method to determine the bin location corresponding to the max curvature (i.e. longest perpendicular distance from the drawn lines). The Rosin bins rb_l (rb_r) are marked with the red (black) x, respectively. 
 
 The upper right figure shows the result of partitioning the image into canopy and sky pixels. This paritioning is based on the rb_l and rb_r values, and can also be modified by the tmthri, tmthrc values explained below.
