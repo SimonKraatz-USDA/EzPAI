@@ -51,9 +51,7 @@ csv content:
    
 hist_ image content: 
 
-<p align="center">
 ![image info](./expected_result/hist_MB520_2020-6-29_MillbrookSchool-a_testinput_WSCT0030.JPG)
-</p>
 
 The upper left figure shows the image histogram. It also draws the line from the origin (last bin) to the rmxb (lmxb). These are used in the Rosin method to determine the bin location corresponding to the max curvature (i.e. longest perpendicular distance from the drawn lines). The Rosin bins rb_l (rb_r) are marked with the red (black) x, respectively. The figure also shows the canopy vs sky delineating bin, located between the Rosin bins, with a vertical dashed line and an annotation at the top of the figure. Here the sky is cloudy, and the delineating bin is at 0.25 the distance between the two Rosin bins. 
 
