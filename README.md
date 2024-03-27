@@ -15,6 +15,9 @@ EzPAI only uses the OpenCV library in addition to other relatively basic python 
 4. python 2_getPAI.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 , where -i is the folder containing the jpg images. The tool should also work with any other image format compatible with the imageio library (not tested).
 
+The result of 4 is a csv file 2_process_<input folder name> and some overview imagery prefixed with hist_, summarizing the importants steps and key values.
+Beyond that, users will most likely need to postprocess data for QA/QC.
+
 ### Explanation:
 
 0_hourscreen.py
@@ -23,17 +26,38 @@ Example: python 0_hourscreen.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
 This script to filter camera imagery by time of day, and export valid data to a file named 0_hourscreen_<input folder name>.csv. The time stamp is set by the -c option, by default it is set to obtain from exif (-c 2) but create time and modified time can also be used. This tool accomplishes two goals: (1) it allows users to skip images that don't fall inside the hours of the day they're interested in; (2) it writes the image date and time into a csv alongside the image name and allows it to be adjusted from there. However, in practice we did not need this kind of screening, as the blur screening script and postprocess filtering described later usually take care of them. However, it is still needed, because the .csv output is a required input to 1_blurscreen.py. For the 21 images in the example, it took 1.2 seconds (i7 Dell Precision 7560 Laptop).
 
+csv content: the first column has the timestamp and the second column has the file name.
+
 1_blurscreen.py
 
 Example: python 1_blurscreen.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
 This script is a second filter, and screens the images listed in 0_hourscreen_<input folder name>.csv for overly blurry images and writes them out to 1_blurscreen_<input folder name>.csv. Information and description of the default thresholds are provided in the script. The blur detection approach is based on the variance of Laplacian, i.e., if the variance (or max value) is lower than a threshold, the image is deemed blurry. For the 19 remaining images in 0_hourscreen csv it took 7.6 seconds (i7 Dell Precision 7560 Laptop).
 
+csv content: same as 0_hourscreen, plus the variance (b1) and maximum value (b2) of the laplace filter result. The threshold is only used for screening out blurry imagery. Only non-blurry images are listed.
+
 2_getPAI.py
 
 Example: python 2_getPAI.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
 This script calculates all the items needed to obtain PAI, following the approach of Ryu et al. (2012). The output is given in 2_getPAI_<input folder name>.csv. Information on the default settings are available in the script. These settings were used over all our images, to get the initial results for PAI and other plant structural parameters. For the 17 remaining images in 1_blurscreeen csv it took 13.1 seconds (i7 Dell Precision 7560 Laptop).
+
+csv content:
+- lmxb, lmxc and rmxb, rmxc are the locations and counts for the canopy (prefix l) and sky (prefix r) peaks.
+- rb_l and rb_r are the locations of the bins used in the canopy/sky discrimination step, based on the Rosin method. 
+- sky gives the blue sky index mean value of the image. For blue sky index calculation, sky pixels are more strictly identified by defaul tthan for the canopy/sky delineation, i.e., 
+- minpixarea gives size of the smallest patches considered as large gaps as % of the image
+- GF, CC, CP and PAI are the canopy structural parameters Gap Fraction, Crown Cover, Crown Porosity, Plant Area Index.
+   
+hist_ image content: 
+
+The upper left figure shows the image histogram. It also draws the line from the origin (last bin) to the rmxb (lmxb). These are used in the Rosin method to determine the bin location corresponding to the max curvature (i.e. longest perpendicular distance from the drawn lines). The Rosin bins rb_l (rb_r) are marked with the red (black) x, respectively. 
+
+The upper right figure shows the result of partitioning the image into canopy and sky pixels. This paritioning is based on the rb_l and rb_r values, and can also be modified by the tmthri, tmthrc values explained below.
+
+The lower right figure shows the input image for reference, after the camera metadata pixels had been removed from the bottom.
+
+The lower left figure shows the large gaps that were identified in the image. It is important to keep in mind that this functionality is based on a simple contour finding approach, and the contours will often be larger in size than one would expect from visual inspection of the upper and lower right figures. This will bias results for canopy structural parameters, but results can still be expected to have reasonable magnitudes and consistency over time.
 
 0_run_ctrl.py
 
@@ -44,6 +68,17 @@ A convenience script for running the first three scripts in sequence using defau
 - There could potentially be some value in skipping the blur detection, as it adds almost 50% processing time, and because many of the blurry imagery may also be filtered out in the postprocessing. But getPAI can be quickly changed to read in imagery from the hourscreen step output. 
 - There can also be value in skipping hour screening, however given that it is fast and provides users with a csv of timestamps it not worth skipping. But one may want to modify the code to remove any screening and consider all available imagery, to avoid omitting useful data when the timestamps are wrong. Timestamps can be updated on the .csv as needed.
 - It is recommended to update Timestamps ahead of the getPAI step, because timestamps are written out on the small overview images that summarize the PAI extraction process ('hist_' jpg), which can be useful for understanding or tweaking settings.
+
+### Important parameters:
+cloudythr: the threshold for the blue sky index value [3] that deciding if the image is mainly diffuse light (cloud, <thr) or not (clear, > thr). This is somewhat qualitative, and depends on the camera used and judgement. It should not take much time to obtain a reasonable estimate from trial and error. This parameter is quite important, because the threshold can impacts how image pixels are categorized into canopy and sky if tmthri and tmthrc have different values as our default code does. Cloudy vs not-cloudy is important for postprocessing, because ideally one would want to calibrate all imagery to diffuse light condition. 
+
+k, the extinction coefficient in Beer's Law [3]: This is somewhat flexible and different, valid rationale can be made to set this value. Probably it would usually be in the 0.4-1.0 range. In our case, we did not have leaf angle distribution measurement, so we just assumed the G function that Ryu used for their 2012 paper over broadleaf forest, 'erectophile'. Our camera field of view was estimated at 40 degrees. Thus calculating G(40)/cos(40) we obtained 0.65 and used that as basis. Other manuscripts have used k = 0.5 for conifers or 0.6 for broadleaves or derived their k value using somewhat different logic. Probably not worth it to overthink how to exactly set k as long as it is within a reasonable range.
+
+skipbotpix: DCP usually have some part of the image dedicated to metadata. In our imagery, this was put at the bottom of the image, so this setting removed the bottom pixels. Feel free to change the code to remove from image however needed, or do the cropping in a prior step.
+
+fcval: the threshold for findcontours to identify large gaps between crowns [3]. For our image processing, we qualitatively determined that 10000 yielded reasonable results in our dense forest. We only added a way to determine what the smallest gap sizes were as percentage of the image, and it was about 0.3% for this setting. We also checked a few other values for our imagery, with 50k and 100k corresponding to about 1.4% and 3%, respectively. This is for our image size of were 2304 x (1728-skipbotpix), for imagery with larger (fewer) pixels than ours fcval needs to be increased (decreased) to keep the size as percentage of the image the same.
+
+lbinskip and rbinskip: doesn't really need to be altered, because the EzPAI results are expected to require some data QC/QA postprocessing regardless.
 
 ## Suggested postprocessing
 One may want to re-screen data for extreme blue sky index values, as well has impose some thresholds on the Rosin edge detection discussed to screen poor quality imagery. Another consideration is a bias in CC/GF/PAI values depending on whether the sky is cloudy or not. This bias is expected a priori and is attributable to illumination differences [3]. Reference [3] addressed this by changing thresholds for canopy/sky discrimination depending on whether the sky was cloudy or not. Our getPAI script also has this functionality, but we used different threshold values that were more appropriate for our setup than those provided in [3] (see our tmthri, tmthrc values in the getPAI script). But even then, we still observed differences ('jumps') for same-day CC/CP/PAI values that depended on whether the sky was cloudy or not. We corrected for this by calibrating crown cover (CC) and gap fraction (GF) of the cloud-free imagery to that of cloudy (i.e., the blue sky index < cloudythr) imagery using linear regression. At most cameras, there was a high correlation between the cloudy and clear-sky data (R > 0.9), allowing for reliable correction. We then calculated new crown porosity values (CP) and used them to obtain new PAI values from the 'diffuse' (cloudy) CC and CP values. This method of obtaining 'calibrated PAI' from the csv outputs was deemed the best option for us, given the large amount of time and uncertainty involved in experimenting with different settings and re-running the scripts each time. 
