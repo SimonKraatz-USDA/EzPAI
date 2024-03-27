@@ -45,7 +45,7 @@ This script calculates all the items needed to obtain PAI, following the approac
 csv content:
 - lmxb, lmxc and rmxb, rmxc are the locations and counts for the canopy (prefix l) and sky (prefix r) peaks.
 - rb_l and rb_r are the locations of the bins used in the canopy/sky discrimination step, based on the Rosin method. 
-- sky gives the blue sky index mean value of the sky pixels. Here, sky pixels were determined using a manner than in the canopy sky partitioning (skythr = 0.75 vs tmthrc, tmthri values of 0.25 of 0.5). 
+- 'sky' gives the blue sky index mean value of the sky pixels. Here, sky pixels were determined using a manner than in the canopy sky partitioning (skythr = 0.75 vs tmthrc, tmthri values of 0.25 of 0.5). 
 - minpixarea gives size of the smallest patches considered as large gaps as % of the image
 - GF, CC, CP and PAI are the canopy structural parameters Gap Fraction, Crown Cover, Crown Porosity, Plant Area Index.
    
@@ -81,7 +81,20 @@ A convenience script for running the first three scripts in sequence using defau
 **fcval**: the threshold for findcontours to identify large gaps between crowns [3]. For our image processing, we qualitatively determined that 10000 yielded reasonable results in our dense forest. We only added a way to determine what the smallest gap sizes were as percentage of the image, and it was about 0.3% for this setting. We also checked a few other values for our imagery, with 50k and 100k corresponding to about 1.4% and 3%, respectively. This is for our image size of were 2304 x (1728-skipbotpix), for imagery with larger (fewer) pixels than ours fcval needs to be increased (decreased) to keep the size as percentage of the image the same.
 
 ## Suggested postprocessing
-One may want to re-screen data for extreme blue sky index values, as well has impose some thresholds on the Rosin edge detection discussed to screen poor quality imagery. Another consideration is a bias in CC/GF/PAI values depending on whether the sky is cloudy or not. This bias is expected a priori and is attributable to illumination differences [3]. Reference [3] addressed this by changing thresholds for canopy/sky discrimination depending on whether the sky was cloudy or not. Our getPAI script also has this functionality, but we used different threshold values that were more appropriate for our setup than those provided in [3] (see our tmthri, tmthrc values in the getPAI script). But even then, we still observed differences ('jumps') for same-day CC/CP/PAI values that depended on whether the sky was cloudy or not. We corrected for this by calibrating crown cover (CC) and gap fraction (GF) of the cloud-free imagery to that of cloudy (i.e., the blue sky index < cloudythr) imagery using linear regression. At most cameras, there was a high correlation between the cloudy and clear-sky data (R > 0.9), allowing for reliable correction. We then calculated new crown porosity values (CP) and used them to obtain new PAI values from the 'diffuse' (cloudy) CC and CP values. This method of obtaining 'calibrated PAI' from the csv outputs was deemed the best option for us, given the large amount of time and uncertainty involved in experimenting with different settings and re-running the scripts each time. 
+
+First, one may want to re-screen data for QA/QC. We found the following to be helpful:
+- remove images having -1 in any column
+- remove images havigng rb_r < 50
+- remove images having delta <= 18
+- remove images having CP < 0.02
+- remove imags having 'sky' > 0.8
+
+Second, after data had been screened one should consider calibrating all data to 'diffuse' light conditions:
+- for each station do a linear regression between cloudy (blue sky index < cloudythr) and not cloudy images. We found that the pearson correlation coefficient R is usually > 0.8. Then use the equation to calibrate the not cloudy image values for CC and GF to that of cloudy imagery. From these calibrated values, new CP and PAI can be calculated.
+- 
+
+Explanation for calibration for diffuse conditions:
+We noted a bias in CC/GF/PAI values depending on whether the sky is cloudy or not. This bias is expected a priori and is attributable to illumination differences [3]. Reference [3] addressed this by changing thresholds for canopy/sky discrimination depending on whether the sky was cloudy or not. Our getPAI script also has this functionality, but we used different threshold values that were more appropriate for our setup than those provided in [3] (see our tmthri, tmthrc values in the getPAI script). But even then, we still observed differences ('jumps') for same-day CC/CP/PAI values that depended on whether the sky was cloudy or not. We found that the above data screenings and calibration greatly improved consistency of the data, without eliminating all that much data. Obtaining 'calibrated PAI' from the csv outputs was a much better option, given the large amount of time and uncertainty involved in experimenting with different EzPAI settings and re-running the scripts each time.
 
 ## Preliminary results and future work:
 Full analysis/write-up regarding the PAI extraction using this tool is still in progress. But we already compared our calibrated EzPAI results (i.e., the average of the 2019-2022 average summer PAI values at each station) to where LICOR-2200 in situ data were collected over 200 m x 200 m areas near the cameras during spring and summer 2022 (N=20) (see [5]). Results of this comparison show R = 0.89, RMSD = 0.93, MD = -0.54, and ubRMSD = 0.75, indicating good correspondence between EzPAI results and in situ. Other preliminary results also showed that postprocessed PAI results are temporally stable having within- and between-year variations of PAI (i.e., sdPAI/PAI) of < 5% at most stations. We're currently working on estimating LAI from our PAI values, and then plan also a more detailed comparison between our dense time LAI series to those obtained from remote sensing in a second future manuscript.
