@@ -90,10 +90,11 @@ First, one may want to re-screen data for QA/QC. We found the following to be he
 - remove imags having 'sky' > 0.8
 
 Second, after data had been screened one should consider calibrating all data to 'diffuse' light conditions:
-- for each station do a linear regression between cloudy (blue sky index < cloudythr) and not cloudy images. We found that the pearson correlation coefficient R is usually > 0.8. Then use the equation to calibrate the not cloudy image values for CC and GF to that of cloudy imagery. From these calibrated values, new CP and PAI can be calculated.
-- 
+- for each station do a linear regression between cloudy (blue sky index < cloudythr) and clear images. The pearson correlation coefficient R is usually > 0.8.
+- use the regression relation to adjust the clear results for CC and CF to that of cloudy 
+- recalculate CP and PAI
 
-Explanation for calibration for diffuse conditions:
+Some background on the need for calibrating to 'diffuse' light condition:
 We noted a bias in CC/GF/PAI values depending on whether the sky is cloudy or not. This bias is expected a priori and is attributable to illumination differences [3]. Reference [3] addressed this by changing thresholds for canopy/sky discrimination depending on whether the sky was cloudy or not. Our getPAI script also has this functionality, but we used different threshold values that were more appropriate for our setup than those provided in [3] (see our tmthri, tmthrc values in the getPAI script). But even then, we still observed differences ('jumps') for same-day CC/CP/PAI values that depended on whether the sky was cloudy or not. We found that the above data screenings and calibration greatly improved consistency of the data, without eliminating all that much data. Obtaining 'calibrated PAI' from the csv outputs was a much better option, given the large amount of time and uncertainty involved in experimenting with different EzPAI settings and re-running the scripts each time.
 
 ## Preliminary results and future work:
