@@ -67,7 +67,7 @@ Example: python 0_run_ctrl.py -i . -p MB
 
 A convenience script for running the first three scripts in sequence using default values for each script, for each folder having a prefix (i.e., starting with the string) given by -p. Also, outputs duration of each step. 
 
-- There could potentially be some value in skipping the blur detection, as it adds almost 50% processing time, and because many of the blurry imagery may also be filtered out in the postprocessing. But getPAI can be quickly changed to read in imagery from the hourscreen step output. 
+- There could be some value in skipping the blur detection, as it adds almost 50% processing time. This may not be needed, given that blurry imagery may also be filtered out in other pre- or post- processing steps, getPAI can be changed to read in imagery from the hourscreen step output. 
 - There can also be value in skipping hour screening, however given that it is fast and provides users with a csv of timestamps it not worth skipping. But one may want to modify the code to remove any screening and consider all available imagery, to avoid omitting useful data when the timestamps are wrong. Timestamps can be updated on the .csv as needed.
 - It is recommended to update Timestamps ahead of the getPAI step, because timestamps are written out on the small overview images that summarize the PAI extraction process ('hist_' jpg), which can be useful for understanding or tweaking settings.
 
