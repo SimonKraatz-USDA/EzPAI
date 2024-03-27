@@ -15,7 +15,7 @@ EzPAI only uses the OpenCV library in addition to other relatively basic python 
 4. python 2_getPAI.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 , where -i is the folder containing the jpg images. The tool should also work with any other image format compatible with the imageio library (not tested).
 
-The result of 4 is a csv file 2_process_<input folder name> and some overview imagery prefixed with hist_, summarizing the importants steps and key values.
+The result of 4 is a csv file starting with '2_process' and some overview imagery prefixed with 'hist_', summarizing the importants steps and key values.
 Beyond that, users will most likely need to postprocess data for QA/QC.
 
 ### Explanation:
@@ -24,7 +24,7 @@ Beyond that, users will most likely need to postprocess data for QA/QC.
 
 Example: python 0_hourscreen.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
-This script to filter camera imagery by time of day, and export valid data to a file named 0_hourscreen_<input folder name>.csv. The time stamp is set by the -c option, by default it is set to obtain from exif (-c 2) but create time and modified time can also be used. This tool accomplishes two goals: (1) it allows users to skip images that don't fall inside the hours of the day they're interested in; (2) it writes the image date and time into a csv alongside the image name and allows it to be adjusted from there. However, in practice we did not need this kind of screening, as the blur screening script and postprocess filtering described later usually take care of them. However, it is still needed, because the .csv output is a required input to 1_blurscreen.py. For the 21 images in the example, it took 1.2 seconds (i7 Dell Precision 7560 Laptop).
+This script to filter camera imagery by time of day, and export valid data to a file starting with '0_hourscreen_'. The time stamp is set by the -c option, by default it is set to obtain from exif (-c 2) but create time and modified time can also be used. This tool accomplishes two goals: (1) it allows users to skip images that don't fall inside the hours of the day they're interested in; (2) it writes the image date and time into a csv alongside the image name and allows it to be adjusted from there. However, in practice we did not need this kind of screening, as the blur screening script and postprocess filtering described later usually take care of them. However, it is still needed, because the .csv output is a required input to 1_blurscreen.py. For the 21 images in the example, it took 1.2 seconds (i7 Dell Precision 7560 Laptop).
 
 csv content: the first column has the timestamp and the second column has the file name.
 
@@ -32,7 +32,7 @@ csv content: the first column has the timestamp and the second column has the fi
 
 Example: python 1_blurscreen.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
-This script is a second filter, and screens the images listed in 0_hourscreen_<input folder name>.csv for overly blurry images and writes them out to 1_blurscreen_<input folder name>.csv. Information and description of the default thresholds are provided in the script. The blur detection approach is based on the variance of Laplacian, i.e., if the variance (or max value) is lower than a threshold, the image is deemed blurry. For the 19 remaining images in 0_hourscreen csv it took 7.6 seconds (i7 Dell Precision 7560 Laptop).
+This script is a second filter, and screens the images listed in the '0_hourscreen_' file for blurry images. The output is written to a file starting with '1_blurscreen_'. Information and description of the default thresholds are provided in the script. The blur detection approach is based on the variance of Laplacian, i.e., if the variance (or max value) is lower than a threshold, the image is deemed blurry. For the 19 remaining images in 0_hourscreen csv it took 7.6 seconds (i7 Dell Precision 7560 Laptop).
 
 csv content: same as 0_hourscreen, plus the variance (b1) and maximum value (b2) of the laplace filter result. The threshold is only used for screening out blurry imagery. Only non-blurry images are listed.
 
@@ -40,7 +40,7 @@ csv content: same as 0_hourscreen, plus the variance (b1) and maximum value (b2)
 
 Example: python 2_getPAI.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 
-This script calculates all the items needed to obtain PAI, following the approach of Ryu et al. (2012). The output is given in 2_getPAI_<input folder name>.csv. Information on the default settings are available in the script. These settings were used over all our images, to get the initial results for PAI and other plant structural parameters. For the 17 remaining images in 1_blurscreeen csv it took 13.1 seconds (i7 Dell Precision 7560 Laptop).
+This script calculates all the items needed to obtain PAI, following the approach of Ryu et al. (2012). The output is given in a file starting with '2_getPAI_' . Information on the default settings are available in the script. These settings were used over all our images, to get the initial results for PAI and other plant structural parameters. For the 17 remaining images in 1_blurscreeen csv it took 13.1 seconds (i7 Dell Precision 7560 Laptop).
 
 csv content:
 - lmxb, lmxc and rmxb, rmxc are the locations and counts for the canopy (prefix l) and sky (prefix r) peaks.
