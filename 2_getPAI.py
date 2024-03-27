@@ -34,7 +34,7 @@ div = 1 #for sliding window with overlap for larger stides (values other than 1 
 #tmthri, tmthrc are canopy vs sky thresholds. smaller means more sky. Common values are 0.25, 0.50 and 0.75. Richardson paper.
 tmthri = 0.50 #use if clear sky, i.e., blue sky index value >= 0.54. This is a weight for identifying the plant/sky cutoff bin - the bin where above which there is sky/cloud DNs. Ryu 2012 used 0.75, but 0.50 seems to perform better for what we have (401 cam, qualitative)
 tmthrc = 0.25 #use if overcast sky. Ryu 2012 uses 0.5, but 0.25 appears more suitable according to our 401 cam data (qualitative)
-cldthr = 0.75 #this is only for calculating the blue sky index, to identify sky pixels in a strict manner (i.e., cldthr = 0.75). Then, if cloudy, the sky/canopy threshold is informed by tmthrc, otherwise tmthri is used. (qualitative)
+skythr = 0.75 #this is only for calculating the blue sky index, to identify sky pixels in a strict manner (i.e., skythr = 0.75). Then, if cloudy, the sky/canopy threshold is informed by tmthrc, otherwise tmthri is used. (qualitative)
 bins_in = np.arange(0,257,binsz) #bin edge counts, a greater number than the histogram bins
 fcval = 10000 #this is the threshold for filtering out find contours, only use larger ones than this number. It is is only indirectly related to pixel count, 10k seems to be close to > 1.3% image pixels for our 2304 x (1728-skipbotpix) images. Should be scaled in line with total pixel count.
 
@@ -186,7 +186,7 @@ def get_PAI(indir):
         #Calculate gap fraction
 
             #check if cloudy
-            TMC = bins[rixa]+int((bins[lixa] - bins[rixa])*cldthr)
+            TMC = bins[rixa]+int((bins[lixa] - bins[rixa])*skythr)
             arrbin=arr[:,:,2].copy()
             cldm = (arrbin >= TMC) 
             skyidx = arr[cldm,2].sum()/(arr[cldm,0].sum()+arr[cldm,1].sum())
@@ -248,7 +248,7 @@ def get_PAI(indir):
             cpl.append(CP)
             print('Crown porosity CP is %s' %CP)
             
-            PAI = -CC*np.log10(CP)/k
+            PAI = -CC*np.log(CP)/k
             pail.append(PAI)
             print('Plant Area Index PAI is %s \n' %PAI)
             
