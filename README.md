@@ -15,7 +15,7 @@ EzPAI only uses the OpenCV library in addition to other relatively basic python 
 4. python 2_getPAI.py -i MB520_2020-6-29_MillbrookSchool-a_testinput
 , where -i is the folder containing the jpg images. The tool should also work with any other image format compatible with the imageio library (not tested).
 
-The result of 4 is a csv file starting with '2_process' and some overview imagery prefixed with 'hist_', summarizing the importants steps and key values.
+The result of 4 is a csv file starting with '2_process' and some overview imagery prefixed with 'hist_', summarizing the important processing steps.
 Beyond that, users will most likely need to postprocess data for QA/QC.
 
 ### Explanation:
@@ -45,7 +45,7 @@ This script calculates all the items needed to obtain PAI, following the approac
 csv content:
 - lmxb, lmxc and rmxb, rmxc are the locations and counts for the canopy (prefix l) and sky (prefix r) peaks.
 - rb_l and rb_r are the locations of the bins used in the canopy/sky discrimination step, based on the Rosin method. 
-- sky gives the blue sky index mean value of the image. For blue sky index calculation, sky pixels are more strictly identified by defaul tthan for the canopy/sky delineation, i.e., 
+- sky gives the blue sky index mean value of the image. For blue sky index calculation, sky pixels are more strictly identified by default than for the canopy/sky delineation, i.e., 
 - minpixarea gives size of the smallest patches considered as large gaps as % of the image
 - GF, CC, CP and PAI are the canopy structural parameters Gap Fraction, Crown Cover, Crown Porosity, Plant Area Index.
    
