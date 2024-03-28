@@ -91,8 +91,6 @@ First, one may want to re-screen data for QA/QC. We found the following to be he
 - remove images having CP < 0.02 ; very small CP values can give unreliable estimates. Probably CP of 0.15 could also be ok. This is because PAI values greatly with small CP, and small CP values can be due to DCP image, EzPAI limitations. Otherwise PAI change between hourly obs can be unrealiable, jump.
 - remove images having 'sky' > 0.8 ; it is possible for summer canopy have strong blue tint throughout image, even if rb_r, rb_l, delta are in range. Else sky can be overestimated.
 
-
-
 Second, after data had been screened one should consider calibrating all data to 'diffuse' light conditions:
 - for each station do a linear regression between cloudy (blue sky index < cloudythr) and clear images. The pearson correlation coefficient R is usually > 0.8.
 - use the regression relation to adjust the clear results for CC and CF to that of cloudy 
@@ -100,6 +98,11 @@ Second, after data had been screened one should consider calibrating all data to
 
 Some background on the need for calibrating to 'diffuse' light condition:
 We noted a bias in CC/GF/PAI values depending on whether the sky is cloudy or not. This bias is expected a priori and is attributable to illumination differences [3]. Reference [3] addressed this by changing thresholds for canopy/sky discrimination depending on whether the sky was cloudy or not. Our getPAI script also has this functionality, but we used different threshold values that were more appropriate for our setup than those provided in [3] (see our tmthri, tmthrc values in the getPAI script). But even then, we still observed differences ('jumps') for same-day CC/CP/PAI values that depended on whether the sky was cloudy or not. We found that the above data screenings and calibration greatly improved consistency of the data, without eliminating all that much data. Obtaining 'calibrated PAI' from the csv outputs was a much better option, given the large amount of time and uncertainty involved in experimenting with different EzPAI settings and re-running the scripts each time.
+
+## Results for example site:
+LICOR measurment over 200 m x 200 m region near station on 7/19/2022 gave PAI = 4.16. Time series for 2022 from EzPAI default settings + "Suggested postprocessing" gives:
+
+![image info](./expected_result/hist_MB520_2020-6-29_MillbrookSchool-a_testinput_WSCT0030.JPG)
 
 ## Preliminary results and future work:
 Full analysis/write-up regarding the PAI extraction using this tool is still in progress. But we already compared our calibrated EzPAI results (i.e., the average of the 2019-2022 average summer PAI values at each station) to where LICOR-2200 in situ data were collected over 200 m x 200 m areas near the cameras during spring and summer 2022 (N=20) (see [5]). Results of this comparison show R = 0.89, RMSD = 0.93, MD = -0.54, and ubRMSD = 0.75, indicating good correspondence between EzPAI results and in situ. Other preliminary results also showed that postprocessed PAI results are temporally stable having within- and between-year variations of PAI (i.e., sdPAI/PAI) of < 5% at most stations. We're currently working on estimating LAI from our PAI values, and then plan also a more detailed comparison between our dense time LAI series to those obtained from remote sensing in a second future manuscript.
