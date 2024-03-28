@@ -84,6 +84,7 @@ A convenience script for running the first three scripts in sequence using defau
 
 First, one may want to re-screen data for QA/QC. We found the following to be helpful:
 - remove images havigng rb_r < 50
+- remove images havigng rb_l < 128
 - remove images having delta <= 18
 - remove images having CP < 0.02
 - remove imags having 'sky' > 0.8
