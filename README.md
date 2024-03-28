@@ -83,11 +83,11 @@ A convenience script for running the first three scripts in sequence using defau
 ## Suggested postprocessing
 
 First, one may want to re-screen data for QA/QC. We found the following to be helpful:
-- remove images havigng rb_r < 50
-- remove images havigng rb_l < 128
+- remove images having rb_r < 50
+- remove images having rb_l < 128
 - remove images having delta <= 18
-- remove images having CP < 0.02 (this also removes the -1 rows)
-- remove imags having 'sky' > 0.8
+- remove images having CP < 0.02
+- remove images having 'sky' > 0.8
 
 Second, after data had been screened one should consider calibrating all data to 'diffuse' light conditions:
 - for each station do a linear regression between cloudy (blue sky index < cloudythr) and clear images. The pearson correlation coefficient R is usually > 0.8.
