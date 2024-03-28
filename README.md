@@ -100,7 +100,7 @@ Some background on the need for calibrating to 'diffuse' light condition:
 We noted a bias in CC/GF/PAI values depending on whether the sky is cloudy or not. This bias is expected a priori and is attributable to illumination differences [3]. Reference [3] addressed this by changing thresholds for canopy/sky discrimination depending on whether the sky was cloudy or not. Our getPAI script also has this functionality, but we used different threshold values that were more appropriate for our setup than those provided in [3] (see our tmthri, tmthrc values in the getPAI script). But even then, we still observed differences ('jumps') for same-day CC/CP/PAI values that depended on whether the sky was cloudy or not. We found that the above data screenings and calibration greatly improved consistency of the data, without eliminating all that much data. Obtaining 'calibrated PAI' from the csv outputs was a much better option, given the large amount of time and uncertainty involved in experimenting with different EzPAI settings and re-running the scripts each time.
 
 ## Results for example site:
-LICOR measurment over 200 m x 200 m region near station on 7/19/2022 gave PAI = 4.16. Time series for 2022 from EzPAI default settings + "Suggested postprocessing" gives:
+LICOR measurment over 200 m x 200 m region near station on 7/19/2022 gave PAI = 4.16. Time series for 2022 from EzPAI default settings + "Suggested postprocessing" gives 4.09 (see image below).
 
 ![image info](./2_process_MB520_out_GFCC_fix_daily_PAI_2022.jpg)
 
