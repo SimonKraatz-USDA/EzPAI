@@ -89,7 +89,7 @@ First, one may want to re-screen data for QA/QC. We found the following to be he
 - remove images having rb_l < 128 ; Rosin bin for maximum curvature for 'sky' shouldn't be less than some bin, from our data picked 128. Otherwise sky can be overestimated.
 - remove images having delta <= 18 ; if rb_r and rb_l are too close, can't accurately discriminate canopy from sky. Otherwise sky can be overestimated.
 - remove images having CP < 0.02 ; very small CP values can give unreliable estimates. Probably CP of 0.15 could also be ok. This is because PAI values greatly with small CP, and small CP values can be due to DCP image, EzPAI limitations. Otherwise PAI change between hourly obs can be unrealiable, jump.
-- remove images having 'sky' > 0.8 ; it is possible for summer canopy have strong blue tint throughout image, even if rb_r, rb_l, delta are in range. Else sky can be overestimated.
+- remove images having 'sky' > 0.8 ; it is possible for summer canopy have strong blue tint throughout image, even if rb_r, rb_l, delta are in range. Else sky can be overestimated. [5] also mentions blue light scattering in underetimating L (although in context with LAI-2000).
 
 Second, after data had been screened one should consider calibrating all data to 'diffuse' light conditions:
 - for each station do a linear regression between cloudy (blue sky index < cloudythr) and clear images. The pearson correlation coefficient R is usually > 0.8.
@@ -105,7 +105,7 @@ LICOR measurment over 200 m x 200 m region near station on 7/19/2022 gave PAI = 
 ![image info](./2_process_MB520_out_GFCC_fix_daily_PAI_2022.jpg)
 
 ## Preliminary results and future work:
-Full analysis/write-up regarding the PAI extraction using this tool is still in progress. But we already compared our calibrated EzPAI results (i.e., the average of the 2019-2022 average summer PAI values at each station) to where LICOR-2200 in situ data were collected over 200 m x 200 m areas near the cameras during spring and summer 2022 (N=20) (see [5]). Results of this comparison show R = 0.89, RMSD = 0.93, MD = -0.54, and ubRMSD = 0.75, indicating good correspondence between EzPAI results and in situ. Other preliminary results also showed that postprocessed PAI results are temporally stable having within- and between-year variations of PAI (i.e., sdPAI/PAI) of < 5% at most stations. We're currently working on estimating LAI from our PAI values, and then plan also a more detailed comparison between our dense time LAI series to those obtained from remote sensing in a second future manuscript.
+Full analysis/write-up regarding the PAI extraction using this tool is still in progress. But we already compared our calibrated EzPAI results (i.e., the average of the 2019-2022 average summer PAI values at each station) to where LICOR-2200 in situ data were collected over 200 m x 200 m areas near the cameras during spring and summer 2022 (N=20) (see [6]). Results of this comparison show R = 0.89, RMSD = 0.93, MD = -0.54, and ubRMSD = 0.75, indicating good correspondence between EzPAI results and in situ. Other preliminary results also showed that postprocessed PAI results are temporally stable having within- and between-year variations of PAI (i.e., sdPAI/PAI) of < 5% at most stations. We're currently working on estimating LAI from our PAI values, and then plan also a more detailed comparison between our dense time LAI series to those obtained from remote sensing in a second future manuscript.
 
 ## References:
 
@@ -117,6 +117,8 @@ Full analysis/write-up regarding the PAI extraction using this tool is still in 
 
 [4] Chianucci, F., Ferrara, C., & Puletti, N. (2022). coveR: an R package for processing digital cover photography images to retrieve forest canopy attributes. Trees, 36(6), 1933-1942.
 
-[5] Cook, C. L. , Bourgeau-Chavez, L., Miller, M. E., Vander Bilt, D., Kraatz, S., Cosh, M.H., Colliander, A. 2024. Comparison of In Situ and Remotely Sensed Leaf Area Index of Northeastern American Deciduous, Mixed, and Coniferous Forests for SMAPVEX19-22. *In Review*.
+[5] Macfarlane, C., Coote, M., White, D. A., & Adams, M. A. (2000). Photographic exposure affects indirect estimation of leaf area in plantations of Eucalyptus globulus Labill. Agricultural and Forest Meteorology, 100(2-3), 155-168.
+
+[6] Cook, C. L. , Bourgeau-Chavez, L., Miller, M. E., Vander Bilt, D., Kraatz, S., Cosh, M.H., Colliander, A. 2024. Comparison of In Situ and Remotely Sensed Leaf Area Index of Northeastern American Deciduous, Mixed, and Coniferous Forests for SMAPVEX19-22. *In Review*.
 
 
