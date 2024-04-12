@@ -240,6 +240,8 @@ def get_PAI(indir):
                 minpixarea = minpix_cnt/NT*100
                 print('minpix count is {0}'.format(minpix_cnt))
                 minpixareal.append(minpixarea)
+            elif len(sorted_contours) == 0:
+                minpixareal.append(-1)
             
             ccl.append(CC)
             print('large gap pixel (NL), clear, canopy pixel counts are %s, %s, %s or %s, %s, %s of image' %(lgc_cnt,clr_cnt,cnp_cnt,lgc_pct,clr_pct,cnp_pct))
@@ -299,7 +301,7 @@ def get_PAI(indir):
             cpl.append(-1)
             pail.append(-1)
             minpixareal.append(-1)
-            
+
             fig, ax = plt.subplots(2,2, figsize=(9, 6))
             ax[0][0].title.set_text('Rosin (2001), up: {0}, lw: {1}, $\\Delta$: {2}'.format('NA','NA','NA'))
             ax[0][0].bar(bins[:-1],counts,width=2)
