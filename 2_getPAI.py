@@ -240,8 +240,6 @@ def get_PAI(indir):
                 minpixarea = minpix_cnt/NT*100
                 print('minpix count is {0}'.format(minpix_cnt))
                 minpixareal.append(minpixarea)
-            else:
-                minpixareal.append(-1)
             
             ccl.append(CC)
             print('large gap pixel (NL), clear, canopy pixel counts are %s, %s, %s or %s, %s, %s of image' %(lgc_cnt,clr_cnt,cnp_cnt,lgc_pct,clr_pct,cnp_pct))
