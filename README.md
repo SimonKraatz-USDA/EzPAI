@@ -105,8 +105,11 @@ LICOR measurment over 200 m x 200 m region near station on 7/19/2022 gave PAI = 
 
 ![image info](./2_process_MB520_out_GFCC_fix_daily_PAI_2022.jpg)
 
-## Preliminary results and future work:
+## Preliminary results:
 Full analysis/write-up regarding the PAI extraction using this tool is still in progress. But we already compared our calibrated EzPAI results (i.e., the average of the 2019-2022 average summer PAI values at each station) to where LICOR-2200 in situ data were collected over 200 m x 200 m areas near the cameras during spring and summer 2022 (N=20) (see [6]). Results of this comparison show R = 0.89, RMSD = 0.93, MD = -0.54, and ubRMSD = 0.75, indicating good correspondence between EzPAI results and in situ. Other preliminary results also showed that postprocessed PAI results are temporally stable having within- and between-year variations of PAI (i.e., sdPAI/PAI) of < 5% at most stations. We're currently working on estimating LAI from our PAI values, and then plan also a more detailed comparison between our dense time LAI series to those obtained from remote sensing in a second future manuscript.
+
+## Future work:
+We will probably not maintain this code, but may make a windows application based on it to widen the user base. 
 
 ## References:
 
