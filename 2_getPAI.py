@@ -32,7 +32,7 @@ stride = 5 #for binsz=4, lbinskip=2, rbinskip=62 there are 60 bins between. Stri
 div = 1 #for sliding window with overlap for larger stides (values other than 1 were only tested early in development, they could throw an error now)
 
 #tmthri, tmthrc are canopy vs sky thresholds. smaller means more sky. Common values are 0.25, 0.50 and 0.75. Richardson paper.
-tmthri = 0.50 #use if clear sky, i.e., blue sky index value >= 0.54. This is a weight for identifying the plant/sky cutoff bin - the bin where above which there is sky/cloud DNs. Ryu 2012 used 0.75, but 0.50 seems to perform better for what we have (401 cam, qualitative)
+tmthri = 0.25 #use if clear sky, i.e., blue sky index value >= 0.54. This is a weight for identifying the plant/sky cutoff bin - the bin where above which there is sky/cloud DNs. Ryu 2012 used 0.75, but 0.50 seems to perform better for what we have (401 cam, qualitative)
 tmthrc = 0.25 #use if overcast sky. Ryu 2012 uses 0.5, but 0.25 appears more suitable according to our 401 cam data (qualitative)
 skythr = 0.75 #this is only for calculating the blue sky index, to identify sky pixels in a strict manner (i.e., skythr = 0.75). Then, if cloudy, the sky/canopy threshold is informed by tmthrc, otherwise tmthri is used. (qualitative)
 bins_in = np.arange(0,257,binsz) #bin edge counts, a greater number than the histogram bins
@@ -233,12 +233,13 @@ def get_PAI(indir):
             CC = 1-(lgc_cnt/NT)
             
             sorted_contours = sorted(contours2, key=cv2.contourArea)
-            tmp_cnt = sorted_contours[0]
-            cv2.drawContours(minc_img,[tmp_cnt],0,(255,255,255),thickness=cv2.FILLED)
-            minpix_cnt = (minc_img==255).sum()
-            minpixarea = minpix_cnt/NT*100
-            print('minpix count is {0}'.format(minpix_cnt))
-            minpixareal.append(minpixarea)
+            if len(sorted_contours) > 0:
+                tmp_cnt = sorted_contours[0]
+                cv2.drawContours(minc_img,[tmp_cnt],0,(255,255,255),thickness=cv2.FILLED)
+                minpix_cnt = (minc_img==255).sum()
+                minpixarea = minpix_cnt/NT*100
+                print('minpix count is {0}'.format(minpix_cnt))
+                minpixareal.append(minpixarea)
             
             ccl.append(CC)
             print('large gap pixel (NL), clear, canopy pixel counts are %s, %s, %s or %s, %s, %s of image' %(lgc_cnt,clr_cnt,cnp_cnt,lgc_pct,clr_pct,cnp_pct))
