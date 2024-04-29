@@ -90,7 +90,7 @@ First, one may want to re-screen data for QA/QC. We found the following to be he
 - remove images having rb_r < 32 ; Rosin bin for maximum curvature for 'canopy' should be greater than some bin, from our data picked 50. For canopy, rb_r < 50 can correspond to a local min, followed by another smaller vegetation peak. EzPAI limitation is that it use a very basic peak finding, which is workable for but can be improved. Otherwise sky can be overestimated.
 - remove images having rb_l < 128 ; Rosin bin for maximum curvature for 'sky' shouldn't be less than some bin, from our data picked 128. Otherwise sky can be overestimated.
 - remove images having delta <= 18 ; if rb_r and rb_l are too close, can't accurately discriminate canopy from sky. Otherwise sky can be overestimated.
-- remove images having CP < 0.015 ; very small CP values can give unreliable estimates. This is because PAI values greatly with small CP, and small CP values can be due to DCP image, EzPAI limitations. Otherwise PAI change between hourly obs can be unrealiable, jump.
+- remove images having CP < 0.023 ; very small CP values can give unreliable estimates. This is because PAI values greatly with small CP, and small CP values can be due to DCP image, EzPAI limitations. Otherwise PAI change between hourly obs can be unrealiable, jump.
 
 Second, after data had been screened one should consider calibrating all data to 'diffuse' light conditions:
 - for each station do a linear regression between cloudy (blue sky index < cloudythr) and clear images. The pearson correlation coefficient R is usually > 0.8.
