@@ -112,7 +112,7 @@ LICOR measurment over 200 m x 200 m region near station on 7/19/2022 gave PAI = 
 ![image info](./2_process_MB520_out_GFCC_fix_daily_PAI_2022.jpg)
 
 ## Preliminary results:
-Full analysis/write-up regarding the PAI extraction using this tool is still in progress. But we already compared our calibrated EzPAI results (i.e., the average of the 2019-2022 average summer PAI values at each station) to where LICOR-2200 in situ data were collected over 200 m x 200 m areas near the cameras during spring and summer 2022 (N=20) (see [6]). Results of this comparison show R = 0.89, RMSD = 0.93, MD = -0.54, and ubRMSD = 0.75, indicating good correspondence between EzPAI results and in situ. Other preliminary results also showed that postprocessed PAI results are temporally stable having within- and between-year variations of PAI (i.e., sdPAI/PAI) of < 5% at most stations. We're currently working on estimating LAI from our PAI values, and then plan also a more detailed comparison between our dense time LAI series to those obtained from remote sensing in a second future manuscript.
+Full analysis/write-up regarding the PAI extraction using this tool is still in progress [6]. But we already compared our calibrated EzPAI results (i.e., the average of the 2019-2022 average summer PAI values at each station) to where LICOR-2200 in situ data were collected over 200 m x 200 m areas near the cameras during spring and summer 2022 (N=20) (see [7]). Results of this comparison show R = 0.89, RMSD = 0.93, MD = -0.54, and ubRMSD = 0.75, indicating good correspondence between EzPAI results and in situ. Other preliminary results also showed that postprocessed PAI results are temporally stable having within- and between-year variations of PAI (i.e., sdPAI/PAI) of < 5% at most stations. We're currently working on estimating LAI from our PAI values, and then plan also a more detailed comparison between our dense time LAI series to those obtained from remote sensing in a second future manuscript.
 
 ## Future work:
 We will probably not maintain this code, but may make a windows application based on it to make DCP processing even more accessible. 
@@ -129,6 +129,8 @@ We will probably not maintain this code, but may make a windows application base
 
 [5] Macfarlane, C., Coote, M., White, D. A., & Adams, M. A. (2000). Photographic exposure affects indirect estimation of leaf area in plantations of Eucalyptus globulus Labill. Agricultural and Forest Meteorology, 100(2-3), 155-168.
 
-[6] Cook, C. L. , Bourgeau-Chavez, L., Miller, M. E., Vander Bilt, D., Kraatz, S., Cosh, M.H., Colliander, A. 2024. Comparison of In Situ and Remotely Sensed Leaf Area Index of Northeastern American Deciduous, Mixed, and Coniferous Forests for SMAPVEX19-22. *In Review*.
+[6] Kraatz, S., Cosh, M., Kelly, V., Bourgeau-Chavez, L., Cook, C., Walker, V., Siqueira, P., Colliander, A. (2024). SMAPVEX19-22 Digital Cover Photography (DCP): a new dataset and processing tool, and new insights on sky bias and DCP capability. *In Review*.
+
+[7] Cook, C. L. , Bourgeau-Chavez, L., Miller, M. E., Vander Bilt, D., Kraatz, S., Cosh, M.H., Colliander, A. 2024. Comparison of In Situ and Remotely Sensed Leaf Area Index of Northeastern American Deciduous, Mixed, and Coniferous Forests for SMAPVEX19-22. *In Review*.
 
 
