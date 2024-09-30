@@ -32,7 +32,7 @@ def cmdLineParse():
                         help='The input directory where the .JPG are. Output is a .csv listing images passing the screen. Edit the .py to modify hours/month to consider.')
     parser.add_argument('-f', '--filthr', dest='filthr', type=int, required=False, default = 1,
                         help='Flag for filtering hour. Filtering == 1, see script. Else no filtering. Default = 1.')
-    parser.add_argument('-c', '--c', dest='ctime', type=int, required=False, default = 0,
+    parser.add_argument('-c', '--c', dest='ctime', type=int, required=False, default = 2,
                         help='Flag for retrieving image create time. 0 = use os modified time. 1 = use os create time. 2 = use exif tag "DateTimeDigitized". Default = 2.')
     return parser.parse_args()
 
