@@ -1,5 +1,8 @@
 # EzPAI: Python scripts for extracting Plant Area Index from zenith-looking Digital Cover Photography
 
+## Please cite as
+Kraatz, S., Cosh, M. H., Kelly, V., Bourgeau-Chavez, L., Chang, J. G., Cook, C., ... & Colliander, A. (2025). A new digital cover photography dataset and processing tool for SMAPVEX19-22: How siting and sky condition impact plant area index retrievals in continuous measurement set-ups. Agricultural and Forest Meteorology, 373, 110767.
+
 ## Background and need: 
 EzPAI was developed to meet our need to monitor tree canopy changes with Digital Cover Photography (DCP). DCPs were installed 40+ USDA soil moisture monitoring stations, that were installed to help with calibration and validation efforts of NASA’s Soil Moisture Active Passive (SMAP) over forests [1]. This particular SMAP Validation Experiment extended from 2019 through 2022, but only few stations had a continuous 4 year record (most had 3 years). Originally the experiment plan was to be conducted and completed during 2019, however a combination of COVID and SMAP satellite dropouts caused delays in the ability to conduct the field campaign until 2022.
 
@@ -132,5 +135,6 @@ We will probably not maintain this code, but may make a windows application base
 [6] Kraatz, S., Cosh, M., Kelly, V., Bourgeau-Chavez, L., Cook, C., Walker, V., Siqueira, P., Colliander, A. (2024). SMAPVEX19-22 Digital Cover Photography (DCP): a new dataset and processing tool, and new insights on sky bias and DCP capability. *In Review*.
 
 [7] Cook, C. L. , Bourgeau-Chavez, L., Miller, M. E., Vander Bilt, D., Kraatz, S., Cosh, M.H., Colliander, A. 2024. Comparison of In Situ and Remotely Sensed Leaf Area Index of Northeastern American Deciduous, Mixed, and Coniferous Forests for SMAPVEX19-22. *In Review*.
+
 
 
